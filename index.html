@@ -8,32 +8,47 @@
   <style>
     :root{
       --ink:#0b3b52; --muted:#64748b; --brand:#0ea5e9; --ring:#dbeafe; --shadow:0 10px 30px rgba(2,132,199,.12);
-      --slide-w:1280px; --slide-h:720px;
+      --slide-w:1280px;
     }
     *{box-sizing:border-box}
     html,body{height:100%; margin:0; font-family:'Tajawal',system-ui; background:#f6fbff; color:var(--ink)}
-    
-    /* ✅ الخلفية المائية الثابتة */
+
+    /* ✅ خلفية الشعار الثابتة (لا تتداخل مع المحتوى) */
     #wm{
       position:fixed; inset:0; z-index:0; pointer-events:none;
-      display:flex; align-items:center; justify-content:center;
-      opacity:.08;
+      display:flex; align-items:center; justify-content:center; opacity:.08;
     }
     #wm img{width:min(45vw, 600px); height:auto}
 
-    /* المسرح والكروت */
-    .stage{height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; position:relative; z-index:1}
+    /* المسرح */
+    .stage{
+      height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
+      position:relative; z-index:1;
+    }
+    .deck{
+      width:var(--slide-w); max-width:95vw; aspect-ratio:16/9; position:relative;
+    }
     .slide{
-      width:var(--slide-w); max-width:95vw; aspect-ratio:16/9; height:auto;
+      position:absolute; inset:0;
       background:#fff; border:1px solid var(--ring); border-radius:18px; box-shadow:var(--shadow);
-      padding:32px; display:none; overflow:hidden;
+      padding:32px; overflow:hidden; display:none;
       background-image:
         radial-gradient(1200px 600px at -10% -10%, rgba(14,165,233,.08), transparent 60%),
         radial-gradient(1000px 500px at 110% 100%, rgba(14,165,233,.09), transparent 60%);
+      isolation:isolate;
     }
-    .slide.active{display:block; animation:fadeIn .45s ease}
-    @keyframes fadeIn{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)}}
-    
+    .slide.active{display:block}
+
+    /* انتقالات انزلاقية احترافية */
+    .enter-right{animation:enterRight .45s cubic-bezier(.2,.8,.2,1)}
+    .enter-left {animation:enterLeft  .45s cubic-bezier(.2,.8,.2,1)}
+    .exit-left  {animation:exitLeft   .45s cubic-bezier(.2,.8,.2,1)}
+    .exit-right {animation:exitRight  .45s cubic-bezier(.2,.8,.2,1)}
+    @keyframes enterRight{from{opacity:0; transform:translateX(60px)} to{opacity:1; transform:translateX(0)}}
+    @keyframes enterLeft {from{opacity:0; transform:translateX(-60px)} to{opacity:1; transform:translateX(0)}}
+    @keyframes exitLeft  {from{opacity:1; transform:translateX(0)} to{opacity:0; transform:translateX(-60px)}}
+    @keyframes exitRight {from{opacity:1; transform:translateX(0)} to{opacity:0; transform:translateX(60px)}}
+
     .topbar{position:absolute; top:18px; left:18px; right:18px; display:flex; align-items:center; gap:10px; justify-content:space-between}
     .logo{height:46px}
     h1,h2{margin:0; color:#062f45}
@@ -42,12 +57,11 @@
     p.lead{font-size:22px; margin:14px 0 0; text-align:center}
     .muted{color:var(--muted)}
 
-    /* أزرار التنقل + شريط التقدم */
+    /* أزرار + شريط تقدم */
     .controls{
       position:fixed; left:0; right:0; bottom:0; display:flex; gap:10px;
       justify-content:center; align-items:center; padding:16px;
-      background:linear-gradient(180deg, transparent, rgba(255,255,255,.9) 45%);
-      z-index:5;
+      background:linear-gradient(180deg, transparent, rgba(255,255,255,.9) 45%); z-index:5;
     }
     .btn{appearance:none; border:1px solid var(--ring); background:#fff; color:#0b3b52;
          padding:12px 18px; border-radius:12px; cursor:pointer; box-shadow:var(--shadow);
@@ -63,7 +77,6 @@
     .device .name{display:block; margin-top:8px; font-weight:800; color:#0b3b52}
     .device .desc{color:var(--muted); font-size:14px}
 
-    /* عناصر القوائم */
     .grid2{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:10px}
     .chip{display:flex; align-items:center; gap:10px; padding:12px; border:1px solid var(--ring); border-radius:12px; background:#fff; font-size:18px; box-shadow:var(--shadow)}
     .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:10px}
@@ -72,57 +85,64 @@
   </style>
 </head>
 <body>
-  <!-- ✅ شعار الخلفية الثابت -->
+  <!-- ✅ شعار خلفي ثابت -->
   <div id="wm"><img src="TabukCluster.jpeg" alt="Watermark"></div>
 
   <div class="stage">
-    <!-- الشرائح -->
-    <section class="slide active">
-      <div class="topbar">
-        <img class="logo" src="TabukCluster.jpeg" alt="Tabuk Health Cluster">
-        <div class="muted" id="pos">1 / 7</div>
-      </div>
-      <h1>النظام الذكي للتنبؤ بأعطال الأجهزة الطبية</h1>
-      <p class="lead">إدارة الصيانة الطبية – تجمع تبوك الصحي</p>
-      <p class="lead" style="margin-top:18px">
-        تحويل الصيانة من نمط تفاعلي إلى نمط استباقي يعتمد على البيانات والذكاء الاصطناعي لرفع جاهزية الأجهزة وتقليل الأعطال.
-      </p>
-    </section>
+    <div class="deck">
+      <!-- S1 -->
+      <section class="slide active">
+        <div class="topbar">
+          <img class="logo" src="TabukCluster.jpeg" alt="Tabuk Health Cluster">
+          <div class="muted" id="pos">1 / 7</div>
+        </div>
+        <h1>النظام الذكي للتنبؤ بأعطال الأجهزة الطبية</h1>
+        <p class="lead">إدارة الصيانة الطبية – تجمع تبوك الصحي</p>
+        <p class="lead" style="margin-top:18px">
+          تحويل الصيانة من نمط تفاعلي إلى نمط استباقي يعتمد على البيانات والذكاء الاصطناعي لرفع جاهزية الأجهزة وتقليل الأعطال.
+        </p>
+      </section>
 
-    <section class="slide">
-      <div class="topbar"><img class="logo" src="TabukCluster.jpeg"><div class="muted"></div></div>
-      <h2>الأجهزة المستهدفة</h2>
-      <div class="devices">
-        <div class="device"><img src="MRI.jpg" onerror="this.src='MRI.jpeg'"><span class="name">MRI</span><div class="desc">Magnetic Resonance Imaging</div></div>
-        <div class="device"><img src="CT.jpg" onerror="this.src='CT.jpeg'"><span class="name">CT</span><div class="desc">Computed Tomography</div></div>
-        <div class="device"><img src="FLUR.jpg" onerror="this.src='FLUR.jpeg'"><span class="name">Fluoroscopy</span><div class="desc">Dynamic X-Ray Imaging</div></div>
-        <div class="device"><img src="XRAY.jpg" onerror="this.src='XRAY.jpeg'"><span class="name">X-Ray</span><div class="desc">General Radiography</div></div>
-      </div>
-    </section>
+      <!-- S2 -->
+      <section class="slide">
+        <div class="topbar"><img class="logo" src="TabukCluster.jpeg"><div class="muted"></div></div>
+        <h2>الأجهزة المستهدفة</h2>
+        <div class="devices">
+          <div class="device"><img src="MRI.jpg" onerror="this.src='MRI.jpeg'"><span class="name">MRI</span><div class="desc">Magnetic Resonance Imaging</div></div>
+          <div class="device"><img src="CT.jpg" onerror="this.src='CT.jpeg'"><span class="name">CT</span><div class="desc">Computed Tomography</div></div>
+          <div class="device"><img src="FLUR.jpg" onerror="this.src='FLUR.jpeg'"><span class="name">Fluoroscopy</span><div class="desc">Dynamic X-Ray Imaging</div></div>
+          <div class="device"><img src="XRAY.jpg" onerror="this.src='XRAY.jpeg'"><span class="name">X-Ray</span><div class="desc">General Radiography</div></div>
+        </div>
+      </section>
 
-    <section class="slide">
-      <div class="topbar"><img class="logo" src="TabukCluster.jpeg"><div class="muted"></div></div>
-      <h2>البيانات التي نجمعها</h2>
-      <div class="grid2">
-        <div class="chip">🌡️ درجات الحرارة (Gantry/Tube/Room)</div>
-        <div class="chip">⚡ الجهد والتيار (kV / mA / Line)</div>
-        <div class="chip">⏱️ ساعات التشغيل وعدد الفحوص</div>
-        <div class="chip">🧾 سجلات الأعطال والصيانة السابقة</div>
-        <div class="chip">💧 الرطوبة وبيئة الغرفة</div>
-        <div class="chip">🧊 مستوى الهيليوم (MRI)</div>
-      </div>
-    </section>
+      <!-- S3 -->
+      <section class="slide">
+        <div class="topbar"><img class="logo" src="TabukCluster.jpeg"><div class="muted"></div></div>
+        <h2>البيانات التي نجمعها</h2>
+        <div class="grid2">
+          <div class="chip">🌡️ درجات الحرارة (Gantry/Tube/Room)</div>
+          <div class="chip">⚡ الجهد والتيار (kV / mA / Line)</div>
+          <div class="chip">⏱️ ساعات التشغيل وعدد الفحوص</div>
+          <div class="chip">🧾 سجلات الأعطال والصيانة السابقة</div>
+          <div class="chip">💧 الرطوبة وبيئة الغرفة</div>
+          <div class="chip">🧊 مستوى الهيليوم (MRI)</div>
+        </div>
+      </section>
 
-    <section class="slide">
-      <div class="topbar"><img class="logo" src="TabukCluster.jpeg"><div class="muted"></div></div>
-      <h2>الذكاء الصناعي والتحليل</h2>
-      <div class="steps">
-        <div class="step"><strong>1) تنظيف البيانات</strong><span class="muted">معالجة المفقود/الشاذ</span></div>
-        <div class="step"><strong>2) النماذج</strong><span class="muted">الانحدار اللوجستي، الغابة العشوائية، LSTM</span></div>
-        <div class="step"><strong>3) كشف الشذوذ</strong><span class="muted">Risk Score & Thresholds</span></div>
-        <div class="step"><strong>4) التنبيهات</strong><span class="muted">إشعار مبكر + توصيات</span></div>
-      </div>
-    </section>
+      <!-- S4 -->
+      <section class="slide">
+        <div class="topbar"><img class="logo" src="TabukCluster.jpeg"><div class="muted"></div></div>
+        <h2>الذكاء الصناعي والتحليل</h2>
+        <div class="steps">
+          <div class="step"><strong>1) تنظيف البيانات</strong><span class="muted">معالجة المفقود/الشاذ</span></div>
+          <div class="step"><strong>2) النماذج</strong><span class="muted">الانحدار اللوجستي، الغابة العشوائية، LSTM</span></div>
+          <div class="step"><strong>3) كشف الشذوذ</strong><span class="muted">Risk Score & Thresholds</span></div>
+          <div class="step"><strong>4) التنبيهات</strong><span class="muted">إشعار مبكر + توصيات</span></div>
+        </div>
+      </section>
+
+      <!-- تكملة الشرائح حسب حاجتك… -->
+    </div>
   </div>
 
   <div class="controls">
@@ -137,13 +157,43 @@
     const bar = document.getElementById('bar');
     let i = 0;
 
-    function show(n){
-      slides[i].classList.remove('active');
-      i = (n + slides.length) % slides.length;
-      slides[i].classList.add('active');
-      if(pos) pos.textContent = (i+1) + " / " + slides.length;
-      bar.style.width = ((i+1)/slides.length*100) + "%";
+    function animate(from, to, dir){
+      // إزالة أي كلاس قديم
+      slides[from].classList.remove('enter-right','enter-left','exit-right','exit-left','active');
+      slides[to].classList.remove('enter-right','enter-left','exit-right','exit-left','active');
+
+      // كلاس الخروج/الدخول
+      slides[from].classList.add(dir==='next' ? 'exit-left' : 'exit-right');
+      slides[to].style.display = 'block';
+      slides[to].classList.add(dir==='next' ? 'enter-right' : 'enter-left');
+
+      // بعد انتهاء الأنيميشن اجعل الهدف Active وأخفِ السابق
+      setTimeout(()=>{
+        slides[from].style.display = 'none';
+        slides[from].classList.remove('exit-left','exit-right');
+        slides[to].classList.remove('enter-right','enter-left');
+        slides[to].classList.add('active');
+      }, 450);
     }
+
+    function show(n){
+      const from = i;
+      const len = slides.length;
+      const to = (n + len) % len;
+
+      const dir = (to > from || (from===len-1 && to===0)) ? 'next' : 'prev';
+
+      // أول مرة: اعرض مباشرة
+      if(!slides[from].classList.contains('active')) {
+        slides[from].classList.add('active');
+      }
+      animate(from, to, dir);
+      i = to;
+
+      if(pos) pos.textContent = (i+1) + " / " + len;
+      bar.style.width = ((i+1)/len*100) + "%";
+    }
+
     function next(){ show(i+1); }
     function prev(){ show(i-1); }
 

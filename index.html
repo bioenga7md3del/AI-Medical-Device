@@ -10,15 +10,14 @@
   *{box-sizing:border-box}
   html,body{height:100%;margin:0;font-family:'Tajawal',system-ui;background:#f6fbff;color:var(--ink)}
 
-  /* شعار خلفي مائي واحد (اختياري) */
+  /* شعار مائي خلفي واحد (اختياري) */
   #wm{position:fixed;inset:0;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;opacity:.06}
   #wm img{width:min(45vw,600px);height:auto}
 
-  /* ✅ ترويسة ثابتة للشعار خارج الكروت لكل الصفحات */
+  /* ✅ ترويسة ثابتة للشعار خارج الكروت */
   header.fixed-logo{
     position:fixed; top:14px; right:16px; z-index:5;
-    background:#fff; border:1px solid var(--ring); border-radius:12px; padding:6px 10px;
-    box-shadow:var(--shadow)
+    background:#fff; border:1px solid var(--ring); border-radius:12px; padding:6px 10px; box-shadow:var(--shadow)
   }
   header.fixed-logo img{height:42px}
 
@@ -69,16 +68,36 @@
   .device .name{display:block;margin-top:10px;font-weight:800;color:#0b3b52}
   .device .desc{color:var(--muted);font-size:14px}
 
+  /* كروت */
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:10px}
+  .chip{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--ring);border-radius:12px;background:#fff;font-size:18px;box-shadow:var(--shadow)}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:10px}
+  .step{background:#fff;border:1px solid var(--ring);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+  .step strong{display:block;color:#0b3b52;margin-bottom:6px}
+
+  /* نموذج لوحة القيادة (Dashboard mock) */
+  .dash{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-top:12px}
+  .panel{background:#fff;border:1px solid var(--ring);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .kpi{background:#fff;border:1px solid var(--ring);border-radius:12px;padding:12px;text-align:center}
+  .kpi .n{font-weight:900;font-size:22px;color:#0ea5e9}
+  .timeline{height:140px;border:1px dashed #d1e9ff;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#6b8399}
+
+  @media (max-width:1000px){
+    .devices{grid-template-columns:1fr}
+    .grid2{grid-template-columns:1fr}
+    .steps{grid-template-columns:repeat(2,1fr)}
+    .models{grid-template-columns:1fr}
+    .dash{grid-template-columns:1fr}
+    .kpis{grid-template-columns:1fr}
+  }
+
   /* كروت النماذج */
   .models{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
   .model{background:#fff;border:1px solid var(--ring);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
   .model h3{margin:0 0 8px 0;color:#0b3b52}
   .model ul{margin:0;padding-right:18px}
   .model li{margin:.2rem 0}
-  @media (max-width:1000px){
-    .devices{grid-template-columns:1fr}
-    .models{grid-template-columns:1fr}
-  }
 </style>
 </head>
 <body>
@@ -91,22 +110,28 @@
   <div class="stage">
     <div class="deck">
 
-      <!-- S1: مقدمة النظام -->
+      <!-- S1: الغلاف / المقدمة -->
       <section class="slide active">
         <h1>النظام الذكي للتنبؤ بأعطال الأجهزة الطبية</h1>
         <p class="lead">إدارة الصيانة الطبية – تجمع تبوك الصحي</p>
         <p class="lead" style="margin-top:18px">
-          يهدف الحل إلى التحول من الصيانة التفاعلية إلى الصيانة الاستباقية باستخدام الذكاء الاصطناعي وتحليلات البيانات
+          مبادرة ابتكارية للتحول من الصيانة التفاعلية إلى الصيانة الاستباقية باستخدام الذكاء الاصطناعي وتحليلات البيانات
           لرفع جاهزية الأجهزة وتقليل الأعطال غير المخططة وخفض التكاليف.
         </p>
-        <ul style="font-size:18px;max-width:900px;margin:18px auto">
-          <li>جمع قراءات تشغيل الأجهزة وسجلات الصيانة بشكل دوري.</li>
-          <li>نماذج تنبؤية تقدّر احتمال العطل وتولد تنبيهًا مبكرًا.</li>
-          <li>لوحة تشغيل موحدة لعرض المخاطر ومؤشرات الأداء الرئيسية.</li>
-        </ul>
       </section>
 
-      <!-- S2: الأجهزة المستهدفة (2×2 + Hover Zoom) -->
+      <!-- S2: لماذا نحتاج النظام؟ -->
+      <section class="slide">
+        <h2>لماذا نحتاج النظام؟</h2>
+        <div class="grid2" style="margin-top:12px">
+          <div class="chip">🚫 أعطال مفاجئة تؤثر على الخدمة وسير العمل.</div>
+          <div class="chip">⏳ تأخر توريد القطع وزيادة زمن التوقف.</div>
+          <div class="chip">🔍 صعوبة متابعة الأداء الفعلي لكل جهاز لحظيًا.</div>
+          <div class="chip">✅ الحل: تنبيهات استباقية تقلل الأعطال وتسرّع الإصلاح.</div>
+        </div>
+      </section>
+
+      <!-- S3: الأجهزة المستهدفة (2×2 + Hover Zoom) -->
       <section class="slide">
         <h2>الأجهزة المستهدفة</h2>
         <div class="devices">
@@ -133,38 +158,90 @@
         </div>
       </section>
 
-      <!-- S3: النماذج الذكائية -->
+      <!-- S4: البيانات التي يتم جمعها -->
+      <section class="slide">
+        <h2>البيانات التي يتم جمعها</h2>
+        <div class="grid2">
+          <div class="chip">🌡️ درجات الحرارة (Gantry/Tube/Room)</div>
+          <div class="chip">⚡ الجهد والتيار (kV/mA/Line Voltage)</div>
+          <div class="chip">⏱️ ساعات التشغيل وعدد الفحوص</div>
+          <div class="chip">🧾 سجلات الأعطال والصيانة السابقة</div>
+          <div class="chip">💧 الرطوبة وبيئة الغرفة</div>
+          <div class="chip">🧊 مستوى الهيليوم (MRI)</div>
+        </div>
+        <p class="muted" style="text-align:center;margin-top:10px">تُحلَّل هذه البيانات لتقدير احتمالية العطل وإصدار تنبيه مبكر مدعوم بتوصية.</p>
+      </section>
+
+      <!-- S5: النماذج الذكائية -->
       <section class="slide">
         <h2>النماذج الذكائية للتنبؤ بالأعطال</h2>
         <div class="models">
           <div class="model">
             <h3>الانحدار اللوجستي (Logistic Regression)</h3>
             <ul>
-              <li>احتمالية العطل خلال نافذة قريبة (0/1).</li>
+              <li>يتنبأ باحتمالية العطل (0/1) خلال نافذة قريبة.</li>
               <li>سريع ومفسَّر بوضوح – خط أساس ممتاز.</li>
-              <li>ميزات مقترحة: متوسط/تذبذب الحرارة، kV/mA، ساعات التشغيل.</li>
+              <li>ميزات: متوسط/تذبذب الحرارة، kV/mA، ساعات التشغيل.</li>
             </ul>
           </div>
           <div class="model">
             <h3>الغابة العشوائية (Random Forest)</h3>
             <ul>
               <li>تجميع أشجار قرارات يلتقط العلاقات اللاخطية.</li>
-              <li>دقة أعلى على البيانات الجدولية وميزة أهمية المتغيرات.</li>
+              <li>دقة أعلى + أهمية المتغيرات.</li>
               <li>يفضَّل مع ميزات مشتقة زمنية (rolling، deltas).</li>
             </ul>
           </div>
           <div class="model">
             <h3>الشبكات طويلة الذاكرة (Long Short-Term Memory – LSTM)</h3>
             <ul>
-              <li>أقوى مع السلاسل الزمنية المنتظمة (logs دقيقة/ساعة).</li>
-              <li>يتتبع الأنماط التطورية ويتنبأ مبكرًا قبل حدوث العطل.</li>
+              <li>أقوى للسلاسل الزمنية المنتظمة (Logs دقيقة/ساعة).</li>
+              <li>يتنبأ مبكرًا قبل العطل بناءً على نمط التغيّر.</li>
               <li>يحتاج بيانات أكثر وتنظيفًا أدق.</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- (احتفظ بأي شرائح إضافية لديك هنا إن وجدت) -->
+      <!-- S6: لوحة التحكم والتحليل -->
+      <section class="slide">
+        <h2>لوحة التحكم والتحليل (Dashboard)</h2>
+        <div class="dash">
+          <div class="panel">
+            <div class="kpis">
+              <div class="kpi"><div class="n">40%</div><div class="muted">خفض الأعطال</div></div>
+              <div class="kpi"><div class="n">95%+</div><div class="muted">جاهزية الأجهزة</div></div>
+              <div class="kpi"><div class="n">↓30%</div><div class="muted">زمن الإصلاح</div></div>
+            </div>
+            <div class="timeline" style="margin-top:12px">منحنى مخاطر/تنبيهات أسبوعية (تمثيلي)</div>
+          </div>
+          <div class="panel">
+            <ul style="margin:0;padding-right:18px">
+              <li>تصنيف المخاطر حسب الموقع/الجهاز.</li>
+              <li>تنبيه قبل العطل + توصية (مثال: فحص التبريد).</li>
+              <li>تتبّع SLA والالتزام الزمني.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- S7: الأثر المتوقع والخطوات القادمة -->
+      <section class="slide">
+        <h2>الأثر المتوقع والخطوات القادمة</h2>
+        <div class="grid2" style="margin-top:10px">
+          <div class="chip">📉 تقليل الأعطال غير المخططة ≈ 40%</div>
+          <div class="chip">📈 رفع الجاهزية لأكثر من 95%</div>
+          <div class="chip">💰 خفض التكاليف التشغيلية</div>
+          <div class="chip">🕒 تسريع زمن الإصلاح ~30%</div>
+        </div>
+        <ul style="font-size:18px;max-width:900px;margin:16px auto">
+          <li>المرحلة 1: تجميع البيانات (MRI/CT/Fluoro/X-Ray).</li>
+          <li>المرحلة 2: بناء النماذج وتقييمها (LR → RF → LSTM).</li>
+          <li>المرحلة 3: ربط لوحة التشغيل والتجريب.</li>
+          <li>المرحلة 4: التوسع على باقي الأجهزة والمواقع.</li>
+        </ul>
+        <p class="muted" style="text-align:center;margin-top:6px">إعداد: م. أحمد عادل – إدارة الصيانة الطبية – تجمع تبوك الصحي</p>
+      </section>
 
     </div>
   </div>
@@ -178,7 +255,6 @@
 
 <script>
   const slides = Array.from(document.querySelectorAll('.slide'));
-  const pos = document.getElementById('pos'); // قد يكون غير موجود في هذا الإصدار
   const bar = document.getElementById('bar');
   let i = 0;
 
@@ -203,7 +279,7 @@
     const dir = (to > from || (from===len-1 && to===0)) ? 'next' : 'prev';
     if(!slides[from].classList.contains('active')) slides[from].classList.add('active');
     animate(from, to, dir); i = to;
-    if(bar) bar.style.width = ((i+1)/len*100) + "%";
+    bar.style.width = ((i+1)/len*100) + "%";
   }
   function next(){ show(i+1); }
   function prev(){ show(i-1); }

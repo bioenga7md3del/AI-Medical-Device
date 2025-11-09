@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>النظام الذكي للتنبؤ بأعطال الأجهزة الطبية • عرض تقديمي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#0f172a; --muted:#64748b; --brand:#0ea5e9; --soft:#e0f2fe; --card:#ffffff; --ring:#dbeafe; --shadow:0 10px 30px rgba(2,132,199,.12);}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font-size:20px; font-family:'Tajawal', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial; color:var(--ink);
+      background:#f8fbff url('TabukCluster.jpeg') no-repeat center center fixed; background-size:500px auto;}
+
+    .wrap{max-width:1100px; margin:24px auto 80px; padding:16px; position:relative; z-index:1}
+    header.top{display:flex; align-items:center; gap:16px; justify-content:center; margin-bottom:14px}
+    header.top img.logo{width:220px; height:auto; object-fit:contain; background:#fff; border:1px solid var(--ring); border-radius:14px; padding:6px; box-shadow:var(--shadow)}
+    .title{text-align:center}
+    .title h1{margin:.3rem 0 .2rem; font-size:32px; font-weight:800}
+    .title p{margin:0; color:var(--muted); font-size:20px}
+
+    .controls{display:flex; gap:12px; justify-content:center; align-items:center; margin:18px 0}
+    .btn{appearance:none; border:1px solid var(--ring); background:#fff; color:#0b3b52; padding:12px 18px; border-radius:12px; cursor:pointer; box-shadow:var(--shadow); font-weight:700; font-size:20px}
+    .btn:hover{filter:brightness(1.03)}
+    .btn.primary{background:linear-gradient(180deg,#38bdf8,#0ea5e9); color:#fff; border-color:#7dd3fc}
+
+    .deck{position:relative}
+    .slide{background:var(--card); border:1px solid var(--ring); border-radius:18px; padding:28px; box-shadow:var(--shadow); display:none}
+    .slide.active{display:block; animation:fadeIn .45s ease}
+    .slide h2{margin:.2rem 0 .8rem; font-size:24px; color:#0b3b52}
+    .lead{color:#0b3b52; font-size:22px; font-weight:700}
+    .muted{color:var(--muted)}
+    .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px}
+    .chip{display:inline-flex; align-items:center; gap:8px; padding:10px 12px; border:1px solid var(--ring); border-radius:999px; background:#fff; font-size:20px}
+    .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
+    .step{background:#fff; border:1px solid var(--ring); border-radius:14px; padding:14px}
+    .step strong{display:block; color:#0b3b52; font-size:20px}
+    .devices{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
+    .device{background:#fff; border:1px solid var(--ring); border-radius:16px; padding:14px; text-align:center; font-size:20px; box-shadow:var(--shadow)}
+    .device .devimg{width:100%; height:140px; object-fit:cover; border-radius:12px; border:1px solid var(--ring); background:#f1f5f9; margin-bottom:10px}
+    .device .name{display:block; font-weight:800; color:#0b3b52; margin-top:4px}
+    .device .desc{color:var(--muted); font-size:16px}
+    .device{background:#fff; border:1px solid var(--ring); border-radius:14px; padding:14px; text-align:center; font-size:20px}
+    .device .ico{font-size:32px}
+
+    @keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
+  </style>
+  <script>
+    let idx = 0;
+    function go(n){
+      const slides = [...document.querySelectorAll('.slide')];
+      if(!slides.length) return;
+      slides[idx].classList.remove('active');
+      idx = (n+slides.length)%slides.length;
+      slides[idx].classList.add('active');
+      document.getElementById('pos').textContent = (idx+1)+"/"+slides.length;
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+    function next(){ go(idx+1); }
+    function prev(){ go(idx-1); }
+    window.addEventListener('DOMContentLoaded', ()=>{
+      const slides = document.querySelectorAll('.slide');
+      if(slides.length){ slides[0].classList.add('active'); }
+      document.addEventListener('keydown', (e)=>{
+        if(e.key==='ArrowLeft') prev();
+        if(e.key==='ArrowRight') next();
+      });
+      // Try-loading device images with multiple possible extensions
+      const tryLoad = (elId, base)=>{
+        const el = document.getElementById(elId);
+        if(!el) return;
+        const exts = ['.jpeg','.jpg','.png','.webp'];
+        let i=0;
+        const tryNext=()=>{
+          if(i>=exts.length) return; 
+          const src = base + exts[i++];
+          const img = new Image();
+          img.onload = ()=>{ el.src = src; };
+          img.onerror = tryNext;
+          img.src = src;
+        };
+        tryNext();
+      };
+      tryLoad('img-mri','MRI');
+      tryLoad('img-ct','CT');
+      tryLoad('img-flur','FLUR');
+      tryLoad('img-xray','XRAY');
+    });
+    });
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <img id="topLogo" class="logo" alt="Tabuk Health Cluster" src="TabukCluster.jpeg"/>
+    </header>
+    <div class="title">
+      <h1>النظام الذكي للتنبؤ بأعطال الأجهزة الطبية</h1>
+      <p>إدارة الصيانة الطبية – تجمع تبوك الصحي</p>
+    </div>
+
+    <div class="controls">
+      <button class="btn" onclick="prev()">‹ السابق</button>
+      <span class="muted" id="pos">1/7</span>
+      <button class="btn primary" onclick="next()">التالي ›</button>
+    </div>
+
+    <div class="deck">
+      <section class="slide active">
+        <p class="lead">تحويل الصيانة من نمط تفاعلي إلى نمط استباقي يعتمد على البيانات والذكاء الاصطناعي لرفع جاهزية الأجهزة وتقليل الأعطال.</p>
+      </section>
+      <section class="slide"><h2>الأجهزة المستهدفة</h2>
+        <div class="devices">
+          <div class="device">
+            <img id="img-mri" class="devimg" alt="MRI" src=""/>
+            <span class="name">MRI</span>
+            <div class="desc">Magnetic Resonance Imaging</div>
+          </div>
+          <div class="device">
+            <img id="img-ct" class="devimg" alt="CT" src=""/>
+            <span class="name">CT</span>
+            <div class="desc">Computed Tomography</div>
+          </div>
+          <div class="device">
+            <img id="img-flur" class="devimg" alt="Fluoroscopy" src=""/>
+            <span class="name">Fluoroscopy</span>
+            <div class="desc">Dynamic X-ray Imaging</div>
+          </div>
+          <div class="device">
+            <img id="img-xray" class="devimg" alt="X-Ray" src=""/>
+            <span class="name">X-Ray</span>
+            <div class="desc">General Radiography</div>
+          </div>
+        </div>
+      </section>
+      <section class="slide"><h2>البيانات التي نجمعها</h2><div class="grid"><div class="chip">🌡️ درجات الحرارة</div><div class="chip">⚡ الجهد والتيار</div><div class="chip">⏱️ ساعات التشغيل</div><div class="chip">🧾 سجلات الأعطال السابقة</div></div></section>
+      <section class="slide"><h2>الذكاء الصناعي والتحليل</h2><div class="steps"><div class="step"><strong>1) تنظيف البيانات</strong></div><div class="step"><strong>2) النماذج</strong></div><div class="step"><strong>3) كشف الشذوذ</strong></div><div class="step"><strong>4) التنبيهات</strong></div></div></section>
+      <section class="slide"><h2>الأثر المتوقع</h2><ul><li>خفض الأعطال بنسبة 40٪</li><li>رفع جاهزية الأجهزة</li><li>خفض تكاليف الإصلاح</li></ul></section>
+      <section class="slide"><h2>الفريق والجهة المنفذة</h2><p><strong>م. أحمد عادل</strong> – إدارة الصيانة الطبية – تجمع تبوك الصحي</p></section>
+    </div>
+
+    <div class="controls">
+      <button class="btn" onclick="prev()">‹ السابق</button>
+      <span class="muted" id="pos">1/7</span>
+      <button class="btn primary" onclick="next()">التالي ›</button>
+    </div>
+  </div>
+</body>
+</html>

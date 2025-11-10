@@ -14,12 +14,13 @@
   #wm{position:fixed;inset:0;z-index:0;pointer-events:none;display:flex;align-items:center;justify-content:center;opacity:.06}
   #wm img{width:min(45vw,600px);height:auto}
 
-  /* ✅ ترويسة ثابتة للشعار خارج الكروت */
-  header.fixed-logo{
-    position:fixed; top:14px; right:16px; z-index:5;
-    background:#fff; border:1px solid var(--ring); border-radius:12px; padding:6px 10px; box-shadow:var(--shadow)
+  /* ✅ ترويسة ثابتة للشعار + عداد */
+  header.fixed-ui{
+    position:fixed; top:14px; left:16px; right:16px; z-index:5; display:flex; align-items:center; justify-content:space-between;
   }
-  header.fixed-logo img{height:42px}
+  .logoBox{background:#fff; border:1px solid var(--ring); border-radius:12px; padding:6px 10px; box-shadow:var(--shadow)}
+  .logoBox img{height:42px}
+  .counter{background:#fff; border:1px solid var(--ring); border-radius:999px; padding:6px 12px; font-weight:800; color:#083549; box-shadow:var(--shadow)}
 
   /* المسرح والشرائح */
   .stage{height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;z-index:1}
@@ -59,13 +60,15 @@
   .progress{height:6px;width:260px;background:#e2f2ff;border-radius:999px;overflow:hidden}
   .bar{height:100%;width:0%;background:#0ea5e9}
 
-  /* الأجهزة 2×2 + تكبير عند المرور */
+  /* الأجهزة 2×2 + تكبير + شارات */
   .devices{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:18px;align-items:stretch}
   .device{background:#fff;border:1px solid var(--ring);border-radius:16px;padding:14px;text-align:center;box-shadow:var(--shadow);display:flex;flex-direction:column}
   .device .imgwrap{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--ring)}
   .device img{width:100%;height:220px;object-fit:cover;transition:transform .35s ease}
   .device:hover img{transform:scale(1.05)}
-  .device .name{display:block;margin-top:10px;font-weight:800;color:#0b3b52}
+  .badges{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+  .badge{font-size:12px;background:#e0f2fe;border:1px solid #bae6fd;color:#075985;border-radius:999px;padding:4px 8px}
+  .device .name{display:block;margin-top:8px;font-weight:800;color:#0b3b52}
   .device .desc{color:var(--muted);font-size:14px}
 
   /* كروت وقوائم */
@@ -75,7 +78,15 @@
   .step{background:#fff;border:1px solid var(--ring);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
   .step strong{display:block;color:#0b3b52;margin-bottom:6px}
 
-  /* نموذج لوحة القيادة (Dashboard) */
+  /* كروت النماذج + الأمثلة */
+  .models,.examples{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
+  .model,.example{background:#fff;border:1px solid var(--ring);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+  .model h3,.example h3{margin:0 0 8px 0;color:#0b3b52}
+  .model ul,.example ul{margin:0;padding-right:18px}
+  .mini{font-size:14px;color:#33566f}
+  .tag{display:inline-block;background:#e0f2fe;border:1px solid #bae6fd;color:#075985;border-radius:999px;padding:4px 10px;font-size:13px;margin-bottom:8px}
+
+  /* Dashboard */
   .dash{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-top:12px}
   .panel{background:#fff;border:1px solid var(--ring);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
   .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
@@ -83,69 +94,66 @@
   .kpi .n{font-weight:900;font-size:22px;color:#0ea5e9}
   .timeline{height:140px;border:1px dashed #d1e9ff;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#6b8399}
 
-  /* ===== Dashboard Extras ===== */
+  /* Dashboard Extras */
   .tbl{width:100%; border-collapse:collapse; font-size:15px; margin-top:10px}
   .tbl th,.tbl td{border:1px solid var(--ring); padding:8px 10px; text-align:center}
   .tbl th{background:#eef7ff; color:#083549; font-weight:800}
-
   .riskbar{height:10px; background:#e6f4ff; border-radius:999px; overflow:hidden; border:1px solid #d7ecff}
   .riskbar > i{display:block; height:100%; background:#0ea5e9}
-
   .alerts{list-style:none; padding:0; margin:0}
   .alerts li{background:#fff; border:1px solid var(--ring); border-radius:10px; padding:10px 12px; margin-bottom:8px; display:flex; align-items:center; gap:10px}
   .badge-mini{padding:3px 8px; border-radius:999px; background:#e0f2fe; border:1px solid #bae6fd; color:#075985; font-weight:700; font-size:12px}
   .time-mini{color:#6b8399; font-size:12px; margin-inline-start:auto}
-
   .spark{width:100%; height:80px}
   .legend{display:flex; gap:10px; align-items:center; font-size:13px; color:#33566f}
   .dot{width:10px; height:10px; border-radius:999px; background:#0ea5e9; border:1px solid #7dd3fc}
+
+  /* قبل/بعد + مصفوفة المخاطر */
+  .baGrid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px}
+  .ba{background:#fff; border:1px solid var(--ring); border-radius:14px; padding:14px; box-shadow:var(--shadow)}
+  .ba h3{margin:0 0 8px 0; color:#0b3b52}
+  .ba .kpis{grid-template-columns:repeat(3,1fr)}
+  .matrix{display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:8px}
+  .cell{border:1px solid var(--ring); border-radius:10px; padding:10px; text-align:center; font-weight:800}
+  .c-low{background:#e8fff1; color:#14532d}     /* احتمال منخفض */
+  .c-med{background:#fff8e6; color:#92400e}     /* متوسط */
+  .c-high{background:#fee2e2; color:#7f1d1d}    /* مرتفع */
 
   @media (max-width:1000px){
     .devices{grid-template-columns:1fr}
     .grid2{grid-template-columns:1fr}
     .steps{grid-template-columns:repeat(2,1fr)}
-    .models{grid-template-columns:1fr}
-    .examples{grid-template-columns:1fr}
+    .models,.examples{grid-template-columns:1fr}
     .dash{grid-template-columns:1fr}
     .kpis{grid-template-columns:1fr}
+    .baGrid{grid-template-columns:1fr}
   }
-
-  /* كروت النماذج */
-  .models{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
-  .model{background:#fff;border:1px solid var(--ring);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
-  .model h3{margin:0 0 8px 0;color:#0b3b52}
-  .model ul{margin:0;padding-right:18px}
-  .model li{margin:.2rem 0}
-
-  /* أمثلة بعد النماذج */
-  .examples{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
-  .example{background:#fff;border:1px solid var(--ring);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
-  .example h3{margin:0 0 8px 0;color:#0b3b52}
-  .badge{display:inline-block;background:#e0f2fe;border:1px solid #bae6fd;color:#075985;border-radius:999px;padding:4px 10px;font-size:13px;margin-bottom:8px}
-  .mini{font-size:14px;color:#33566f}
 </style>
 </head>
 <body>
   <!-- (اختياري) شعار مائي خلفي واحد -->
   <div id="wm"><img src="TabukCluster.jpeg" alt="Watermark"></div>
 
-  <!-- ✅ شعار ثابت خارج الكروت -->
-  <header class="fixed-logo"><img src="TabukCluster.jpeg" alt="Tabuk Health Cluster"></header>
+  <!-- ✅ شعار ثابت + عداد -->
+  <header class="fixed-ui">
+    <div class="logoBox"><img src="TabukCluster.jpeg" alt="Tabuk Health Cluster"></div>
+    <div class="counter" id="counter">1 / 9</div>
+  </header>
 
   <div class="stage">
     <div class="deck">
 
-      <!-- S1: الغلاف / المقدمة -->
+      <!-- S1 -->
       <section class="slide active">
         <h1>النظام الذكي للتنبؤ بأعطال الأجهزة الطبية</h1>
         <p class="lead">إدارة الصيانة الطبية – تجمع تبوك الصحي</p>
         <p class="lead" style="margin-top:18px">
-          مبادرة ابتكارية للتحول من الصيانة التفاعية إلى الصيانة الاستباقية باستخدام الذكاء الاصطناعي وتحليلات البيانات
+          مبادرة ابتكارية للتحول من الصيانة التفاعلية إلى الاستباقية باستخدام الذكاء الاصطناعي وتحليلات البيانات
           لرفع جاهزية الأجهزة وتقليل الأعطال غير المخططة وخفض التكاليف.
         </p>
       </section>
 
-      <!-- S2: لماذا نحتاج النظام؟ -->
+      <!-- S2 -->
       <section class="slide">
         <h2>لماذا نحتاج النظام؟</h2>
         <div class="grid2" style="margin-top:12px">
@@ -156,34 +164,65 @@
         </div>
       </section>
 
-      <!-- S3: الأجهزة المستهدفة (2×2 + Hover Zoom) -->
+      <!-- S3 الأجهزة 2×2 + شارات -->
       <section class="slide">
         <h2>الأجهزة المستهدفة</h2>
-        <div class="devices">
+        <div class="devices" title="التصنيفات: Risk>70% عالٍ، 40–70% متوسط، <40% منخفض">
           <div class="device">
-            <div class="imgwrap"><img src="MRI.jpg" onerror="this.src='MRI.jpeg'" alt="MRI"></div>
+            <div class="imgwrap">
+              <img loading="lazy" src="MRI.jpg" onerror="this.src='MRI.jpeg'" alt="MRI">
+            </div>
+            <div class="badges">
+              <span class="badge" title="متوسط حرارة الغرفة/الأنبوبة">Avg Temp: 21.8°C</span>
+              <span class="badge" title="عدد التحذيرات خلال 7 أيام">Alerts/7d: 5</span>
+              <span class="badge" title="تقدير مخاطرة العطل">Risk: 82%</span>
+            </div>
             <span class="name">MRI</span>
             <div class="desc">Magnetic Resonance Imaging</div>
           </div>
+
           <div class="device">
-            <div class="imgwrap"><img src="CT.jpg" onerror="this.src='CT.jpeg'" alt="CT"></div>
+            <div class="imgwrap">
+              <img loading="lazy" src="CT.jpg" onerror="this.src='CT.jpeg'" alt="CT">
+            </div>
+            <div class="badges">
+              <span class="badge">Avg Temp: 24.1°C</span>
+              <span class="badge">Alerts/7d: 4</span>
+              <span class="badge">Risk: 66%</span>
+            </div>
             <span class="name">CT</span>
             <div class="desc">Computed Tomography</div>
           </div>
+
           <div class="device">
-            <div class="imgwrap"><img src="FLUR.jpg" onerror="this.src='FLUR.jpeg'" alt="Fluoroscopy"></div>
+            <div class="imgwrap">
+              <img loading="lazy" src="FLUR.jpg" onerror="this.src='FLUR.jpeg'" alt="Fluoroscopy">
+            </div>
+            <div class="badges">
+              <span class="badge">Avg Temp: 23.3°C</span>
+              <span class="badge">Alerts/7d: 2</span>
+              <span class="badge">Risk: 48%</span>
+            </div>
             <span class="name">Fluoroscopy</span>
             <div class="desc">Dynamic X-Ray Imaging</div>
           </div>
+
           <div class="device">
-            <div class="imgwrap"><img src="XRAY.jpg" onerror="this.src='XRAY.jpeg'" alt="X-Ray"></div>
+            <div class="imgwrap">
+              <img loading="lazy" src="XRAY.jpg" onerror="this.src='XRAY.jpeg'" alt="X-Ray">
+            </div>
+            <div class="badges">
+              <span class="badge">Avg Temp: 22.4°C</span>
+              <span class="badge">Alerts/7d: 1</span>
+              <span class="badge">Risk: 31%</span>
+            </div>
             <span class="name">X-Ray</span>
             <div class="desc">General Radiography</div>
           </div>
         </div>
       </section>
 
-      <!-- S4: البيانات التي يتم جمعها -->
+      <!-- S4 البيانات -->
       <section class="slide">
         <h2>البيانات التي يتم جمعها</h2>
         <div class="grid2">
@@ -194,181 +233,143 @@
           <div class="chip">💧 الرطوبة وبيئة الغرفة</div>
           <div class="chip">🧊 مستوى الهيليوم (MRI)</div>
         </div>
-        <p class="muted" style="text-align:center;margin-top:10px">تُحلَّل هذه البيانات لتقدير احتمالية العطل وإصدار تنبيه مبكر مدعوم بتوصية.</p>
+        <p class="muted" style="text-align:center;margin-top:10px">تُحلَّل هذه البيانات لتقدير احتمالية العطل وإصدار تنبيه مبكر.</p>
       </section>
 
-      <!-- S5: النماذج الذكائية -->
+      <!-- S5 النماذج -->
       <section class="slide">
         <h2>النماذج الذكائية للتنبؤ بالأعطال</h2>
         <div class="models">
           <div class="model">
-            <h3>Logistic Regression</h3>
+            <h3>الانحدار اللوجستي (Logistic Regression)</h3>
             <ul>
-              <li>يتنبأ باحتمالية العطل (0/1) خلال نافذة قريبة.</li>
+              <li>يتنبأ باحتمالية العطل (0/1) في نافذة قريبة.</li>
               <li>سريع ومفسَّر بوضوح – خط أساس ممتاز.</li>
               <li>ميزات: متوسط/تذبذب الحرارة، kV/mA، ساعات التشغيل.</li>
             </ul>
           </div>
           <div class="model">
-            <h3>Random Forest</h3>
+            <h3>الغابة العشوائية (Random Forest)</h3>
             <ul>
-              <li>تجميع أشجار قرارات يلتقط العلاقات اللاخطية.</li>
+              <li>تجميع أشجار يلتقط العلاقات اللاخطية.</li>
               <li>دقة أعلى + أهمية المتغيرات.</li>
-              <li>يفضَّل مع ميزات مشتقة زمنية (rolling، deltas).</li>
+              <li>يفضّل مع ميزات زمنية مشتقة (rolling، deltas).</li>
             </ul>
           </div>
           <div class="model">
-            <h3>Long Short-Term Memory – LSTM</h3>
+            <h3>الشبكات طويلة الذاكرة (Long Short-Term Memory – LSTM)</h3>
             <ul>
-              <li>أقوى للسلاسل الزمنية المنتظمة (Logs دقيقة/ساعة).</li>
-              <li>يتنبأ مبكرًا قبل العطل بناءً على نمط التغيّر.</li>
-              <li>يحتاج بيانات أكثر وتنظيفًا أدق.</li>
+              <li>قوية للسلاسل الزمنية المنتظمة.</li>
+              <li>تتنبأ مبكرًا قبل العطل بناءً على نمط التغيّر.</li>
+              <li>تحتاج بيانات أكثر وتنظيفًا أدق.</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- S6: أمثلة تطبيقية لكل نموذج -->
+      <!-- S6 أمثلة لكل نموذج -->
       <section class="slide">
         <h2>أمثلة تطبيقية على النماذج</h2>
         <div class="examples">
           <div class="example">
-            <span class="badge">Logistic Regression</span>
-            <h3>مثال: CT – حرارة/تيار</h3>
-            <p class="mini">بيانات آخر 24 ساعة تُظهر:</p>
+            <span class="tag">Logistic Regression</span>
+            <h3>CT – حرارة/تيار</h3>
             <ul class="mini">
-              <li>متوسط حرارة الأنبوبة ↑ +7°C عن خط الأساس.</li>
-              <li>تذبذب mA (الانحراف المعياري) ↑ 28%.</li>
-              <li>عدد الفحوص ↑ 35% عن اليوم السابق.</li>
+              <li>Tube Temp ↑ +7°C عن الأساس.</li>
+              <li>mA σ ↑ 28%.</li>
+              <li>الفحوص ↑ 35%.</li>
             </ul>
-            <p class="mini"><strong>ناتج النموذج:</strong> احتمال العطل = <b>0.78</b> خلال 7 أيام.</p>
-            <p class="mini"><strong>التوصية:</strong> فحص نظام التبريد، والتحقق من المراوح والفلتر، وجدولة Tube Conditioning.</p>
+            <p class="mini"><b>احتمالية:</b> 0.78 خلال 7 أيام. <b>توصية:</b> تبريد + Conditioning.</p>
           </div>
-
           <div class="example">
-            <span class="badge">Random Forest</span>
-            <h3>مثال: Fluoroscopy – قرار متعدد العوامل</h3>
-            <p class="mini">أهم الميزات (Feature Importance):</p>
-            <ul class="mini">
-              <li>استقرار جهد الخط Line Voltage (CV) = 0.06.</li>
-              <li>درجة حرارة Tube Peak آخر 72 ساعة.</li>
-              <li>عدد تحذيرات النظام الأسبوع الحالي.</li>
-            </ul>
-            <p class="mini"><strong>قرار الغابة:</strong> خطر مرتفع (تصويت 73/100 شجرة).</p>
-            <p class="mini"><strong>التوصية:</strong> معايرة مزود الطاقة، وفحص توصيلات التأريض، ومراقبة التحذيرات 48 ساعة.</p>
+            <span class="tag">Random Forest</span>
+            <h3>Fluoroscopy – قرار متعدد</h3>
+            <p class="mini">أهم الميزات: Line CV, Tube Peak, Warnings.</p>
+            <p class="mini"><b>قرار:</b> خطر مرتفع (73/100). <b>توصية:</b> PSU/تأريض.</p>
           </div>
-
           <div class="example">
-            <span class="badge">LSTM</span>
-            <h3>مثال: MRI – سلسلة زمنية</h3>
-            <p class="mini">سلسلة 48 ساعة تُظهر:</p>
-            <ul class="mini">
-              <li>انخفاض Helium % من 92 → 88 مع ميل هابط.</li>
-              <li>ارتفاع تدريجي في Cold Head Temp.</li>
-              <li>دفعات أخطاء Gradient متقطعة قرب نهاية اليوم الثاني.</li>
-            </ul>
-            <p class="mini"><strong>توقع LSTM:</strong> مخاطرة عالية خلال <b>72 ساعة</b> (Score 0.82).</p>
-            <p class="mini"><strong>التوصية:</strong> فحص التبريد، مراجعة تسريب الهيليوم، وجدولة زيارة فني إذا استمرت الزيادة.</p>
+            <span class="tag">LSTM</span>
+            <h3>MRI – سلسلة زمنية</h3>
+            <p class="mini"><b>توقع 72h:</b> Score 0.82. <b>توصية:</b> تبريد + هيليوم.</p>
           </div>
         </div>
-        <p class="muted" style="text-align:center;margin-top:10px">أمثلة تمثيلية للتوضيح — تُضبط العتبات حسب سعة الفريق ومعدل الإنذار المقبول.</p>
       </section>
 
-      <!-- S7: لوحة التحكم والتحليل (Dashboard) – أمثلة وبيانات -->
+      <!-- S7 Dashboard أمثلة وبيانات -->
       <section class="slide">
         <h2>لوحة التحكم والتحليل (Dashboard) – أمثلة وبيانات</h2>
-
         <div class="dash">
-          <!-- لوحة مؤشرات + مخطط شرارة -->
           <div class="panel">
             <div class="kpis">
               <div class="kpi"><div class="n">40%</div><div class="muted">خفض الأعطال</div></div>
               <div class="kpi"><div class="n">95%+</div><div class="muted">جاهزية الأجهزة</div></div>
               <div class="kpi"><div class="n">↓30%</div><div class="muted">زمن الإصلاح</div></div>
             </div>
-
-            <!-- مخطط شرارة (خطر أسبوعي) -->
             <div style="margin-top:12px; background:#fff; border:1px solid var(--ring); border-radius:12px; padding:12px">
-              <div class="legend"><span class="dot"></span> خطر أسبوعي (قيمة تمثيلية 0→100)</div>
+              <div class="legend"><span class="dot"></span> خطر أسبوعي (0→100)</div>
               <svg class="spark" viewBox="0 0 300 80" preserveAspectRatio="none" aria-label="Sparkline">
-                <!-- شبكة خفيفة -->
                 <g stroke="#e8f3ff" stroke-width="1">
-                  <line x1="0" y1="70" x2="300" y2="70"/>
-                  <line x1="0" y1="40" x2="300" y2="40"/>
-                  <line x1="0" y1="10" x2="300" y2="10"/>
+                  <line x1="0" y1="70" x2="300" y2="70"/><line x1="0" y1="40" x2="300" y2="40"/><line x1="0" y1="10" x2="300" y2="10"/>
                 </g>
-                <!-- خط المخاطر (مثال) -->
                 <polyline fill="none" stroke="#0ea5e9" stroke-width="3"
                   points="0,60 43,55 86,50 129,65 172,40 215,35 258,20 300,25"/>
-                <!-- نقاط -->
                 <g fill="#0ea5e9" stroke="#7dd3fc">
-                  <circle cx="0" cy="60" r="3"/><circle cx="43" cy="55" r="3"/>
-                  <circle cx="86" cy="50" r="3"/><circle cx="129" cy="65" r="3"/>
-                  <circle cx="172" cy="40" r="3"/><circle cx="215" cy="35" r="3"/>
-                  <circle cx="258" cy="20" r="3"/><circle cx="300" cy="25" r="3"/>
+                  <circle cx="0" cy="60" r="3"/><circle cx="43" cy="55" r="3"/><circle cx="86" cy="50" r="3"/><circle cx="129" cy="65" r="3"/>
+                  <circle cx="172" cy="40" r="3"/><circle cx="215" cy="35" r="3"/><circle cx="258" cy="20" r="3"/><circle cx="300" cy="25" r="3"/>
                 </g>
               </svg>
             </div>
           </div>
-
-          <!-- لوحة تفاصيل: جدول أجهزة + تنبيهات -->
           <div class="panel">
-            <!-- جدول أمثلة أجهزة -->
             <table class="tbl">
-              <thead>
-                <tr>
-                  <th>الجهاز</th>
-                  <th>الموقع</th>
-                  <th>Risk%</th>
-                  <th>آخر تنبيه</th>
-                  <th>ETTF* (ساعات)</th>
-                </tr>
-              </thead>
+              <thead><tr><th>الجهاز</th><th>الموقع</th><th>Risk%</th><th>آخر تنبيه</th><th>ETTF*</th></tr></thead>
               <tbody>
-                <tr>
-                  <td>MRI</td>
-                  <td>مستشفي الملك فهد</td>
-                  <td><div class="riskbar"><i style="width:82%"></i></div></td>
-                  <td>تبريد المغناطيس</td>
-                  <td>72</td>
-                </tr>
-                <tr>
-                  <td>CT</td>
-                  <td> مستشفي الملك خالد</td>
-                  <td><div class="riskbar"><i style="width:66%"></i></div></td>
-                  <td>ارتفاع حرارة Tube</td>
-                  <td>96</td>
-                </tr>
-                <tr>
-                  <td>Fluoroscopy</td>
-                  <td> ضباء العام </td>
-                  <td><div class="riskbar"><i style="width:48%"></i></div></td>
-                  <td>تحذيرات PSU متقطعة</td>
-                  <td>140</td>
-                </tr>
-                <tr>
-                  <td>X-Ray</td>
-                  <td>مستشفى الولادة</td>
-                  <td><div class="riskbar"><i style="width:31%"></i></div></td>
-                  <td>عدم استقرار Line Voltage</td>
-                  <td>190</td>
-                </tr>
+                <tr><td>MRI</td><td>المركز الطبي أ</td><td><div class="riskbar"><i style="width:82%"></i></div></td><td>تبريد المغناطيس</td><td>72h</td></tr>
+                <tr><td>CT</td><td>المستشفى الرئيسي</td><td><div class="riskbar"><i style="width:66%"></i></div></td><td>Tube Temp</td><td>96h</td></tr>
+                <tr><td>Fluoro</td><td>مركز الأشعة ب</td><td><div class="riskbar"><i style="width:48%"></i></div></td><td>PSU Warnings</td><td>140h</td></tr>
+                <tr><td>X-Ray</td><td>مستشفى النساء</td><td><div class="riskbar"><i style="width:31%"></i></div></td><td>Line Voltage</td><td>190h</td></tr>
               </tbody>
             </table>
-            <p class="muted" style="font-size:12px; margin-top:6px">* ETTF = Estimated Time To Failure (تقدير زمني حتى العطل)</p>
-
-            <!-- تنبيهات حديثة -->
+            <p class="muted" style="font-size:12px;margin-top:6px">* ETTF = تقدير الوقت حتى العطل</p>
             <h3 style="margin-top:12px; color:#0b3b52">تنبيهات حديثة</h3>
             <ul class="alerts">
-              <li><span class="badge-mini">CT</span> حرارة Tube تخطّت العتبة (↑7°C فوق الأساس) <span class="time-mini">قبل 1 ساعة</span></li>
-              <li><span class="badge-mini">MRI</span> هبوط تدريجي في Helium% مع ارتفاع Cold Head Temp <span class="time-mini">قبل 3 ساعات</span></li>
-              <li><span class="badge-mini">Fluoro</span> تحذيرات PSU متقطعة – يُنصح بفحص التوصيلات <span class="time-mini">اليوم 09:30</span></li>
+              <li><span class="badge-mini">CT</span> حرارة Tube تخطّت العتبة <span class="time-mini">قبل 1 ساعة</span></li>
+              <li><span class="badge-mini">MRI</span> هبوط Helium% + ارتفاع Cold Head Temp <span class="time-mini">قبل 3 ساعات</span></li>
+              <li><span class="badge-mini">Fluoro</span> تحذيرات PSU متقطعة <span class="time-mini">اليوم 09:30</span></li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- S8: الأثر المتوقع والخطوات القادمة -->
+      <!-- S8 قبل/بعد + مصفوفة المخاطر (B) -->
+      <section class="slide">
+        <h2>قبل / بعد + مصفوفة المخاطر</h2>
+        <div class="baGrid">
+          <!-- قبل/بعد -->
+          <div class="ba">
+            <h3>قبل ⇄ بعد (3 أشهر)</h3>
+            <div class="kpis" style="display:grid;gap:10px">
+              <div class="kpi"><div class="n">-40%</div><div class="muted">الأعطال غير المخططة</div></div>
+              <div class="kpi"><div class="n">95%+</div><div class="muted">جاهزية الأجهزة</div></div>
+              <div class="kpi"><div class="n">-30%</div><div class="muted">زمن الإصلاح</div></div>
+            </div>
+            <p class="muted" style="margin-top:8px;font-size:13px">قيم تمثيلية — تُضبط بعد تجربة تجريبية.</p>
+          </div>
+          <!-- مصفوفة المخاطر -->
+          <div class="ba">
+            <h3>مصفوفة المخاطر (احتمال × تأثير)</h3>
+            <div class="matrix">
+              <div class="cell c-low">XRAY – منخفض</div>
+              <div class="cell c-med">Fluoro – متوسط</div>
+              <div class="cell c-med">CT – متوسط</div>
+              <div class="cell c-high">MRI – مرتفع</div>
+            </div>
+            <p class="muted" style="margin-top:8px;font-size:13px">مثال توضيحي—يُحسب ديناميكيًا من درجات المخاطر.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- S9 الأثر والخطوات -->
       <section class="slide">
         <h2>الأثر المتوقع والخطوات القادمة</h2>
         <div class="grid2" style="margin-top:10px">
@@ -399,7 +400,14 @@
 <script>
   const slides = Array.from(document.querySelectorAll('.slide'));
   const bar = document.getElementById('bar');
+  const counter = document.getElementById('counter');
   let i = 0;
+
+  function updateUI(){
+    const len = slides.length;
+    if(counter) counter.textContent = (i+1) + " / " + len;
+    if(bar) bar.style.width = ((i+1)/len*100) + "%";
+  }
 
   function animate(from, to, dir){
     slides[from].classList.remove('enter-right','enter-left','exit-right','exit-left','active');
@@ -414,6 +422,7 @@
       slides[from].classList.remove('exit-left','exit-right');
       slides[to].classList.remove('enter-right','enter-left');
       slides[to].classList.add('active');
+      updateUI();
     }, 450);
   }
 
@@ -422,7 +431,6 @@
     const dir = (to > from || (from===len-1 && to===0)) ? 'next' : 'prev';
     if(!slides[from].classList.contains('active')) slides[from].classList.add('active');
     animate(from, to, dir); i = to;
-    bar.style.width = ((i+1)/len*100) + "%";
   }
   function next(){ show(i+1); }
   function prev(){ show(i-1); }
@@ -433,6 +441,9 @@
     if(e.key==='ArrowRight') next();
     if(e.key==='ArrowLeft')  prev();
   });
+
+  // init
+  updateUI();
 </script>
 </body>
 </html>

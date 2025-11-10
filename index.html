@@ -68,14 +68,14 @@
   .device .name{display:block;margin-top:10px;font-weight:800;color:#0b3b52}
   .device .desc{color:var(--muted);font-size:14px}
 
-  /* كروت */
+  /* كروت وقوائم */
   .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:10px}
   .chip{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--ring);border-radius:12px;background:#fff;font-size:18px;box-shadow:var(--shadow)}
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:10px}
   .step{background:#fff;border:1px solid var(--ring);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
   .step strong{display:block;color:#0b3b52;margin-bottom:6px}
 
-  /* نموذج لوحة القيادة (Dashboard mock) */
+  /* نموذج لوحة القيادة */
   .dash{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-top:12px}
   .panel{background:#fff;border:1px solid var(--ring);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
   .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
@@ -83,21 +83,28 @@
   .kpi .n{font-weight:900;font-size:22px;color:#0ea5e9}
   .timeline{height:140px;border:1px dashed #d1e9ff;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#6b8399}
 
-  @media (max-width:1000px){
-    .devices{grid-template-columns:1fr}
-    .grid2{grid-template-columns:1fr}
-    .steps{grid-template-columns:repeat(2,1fr)}
-    .models{grid-template-columns:1fr}
-    .dash{grid-template-columns:1fr}
-    .kpis{grid-template-columns:1fr}
-  }
-
   /* كروت النماذج */
   .models{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
   .model{background:#fff;border:1px solid var(--ring);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
   .model h3{margin:0 0 8px 0;color:#0b3b52}
   .model ul{margin:0;padding-right:18px}
   .model li{margin:.2rem 0}
+
+  /* أمثلة بعد النماذج */
+  .examples{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
+  .example{background:#fff;border:1px solid var(--ring);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+  .example h3{margin:0 0 8px 0;color:#0b3b52}
+  .badge{display:inline-block;background:#e0f2fe;border:1px solid #bae6fd;color:#075985;border-radius:999px;padding:4px 10px;font-size:13px;margin-bottom:8px}
+  .mini{font-size:14px;color:#33566f}
+  @media (max-width:1000px){
+    .devices{grid-template-columns:1fr}
+    .grid2{grid-template-columns:1fr}
+    .steps{grid-template-columns:repeat(2,1fr)}
+    .models{grid-template-columns:1fr}
+    .examples{grid-template-columns:1fr}
+    .dash{grid-template-columns:1fr}
+    .kpis{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body>
@@ -203,7 +210,53 @@
         </div>
       </section>
 
-      <!-- S6: لوحة التحكم والتحليل -->
+      <!-- NEW S6: أمثلة تطبيقية لكل نموذج -->
+      <section class="slide">
+        <h2>أمثلة تطبيقية على النماذج</h2>
+        <div class="examples">
+          <div class="example">
+            <span class="badge">Logistic Regression</span>
+            <h3>مثال: CT – حرارة/تيار</h3>
+            <p class="mini">بيانات آخر 24 ساعة تُظهر:</p>
+            <ul class="mini">
+              <li>متوسط حرارة الأنبوبة ↑ +7°C عن خط الأساس.</li>
+              <li>تذبذب mA (الانحراف المعياري) ↑ 28%.</li>
+              <li>عدد الفحوص ↑ 35% عن اليوم السابق.</li>
+            </ul>
+            <p class="mini"><strong>ناتج النموذج:</strong> احتمال العطل = <b>0.78</b> خلال 7 أيام.</p>
+            <p class="mini"><strong>التوصية:</strong> فحص نظام التبريد، والتحقق من المراوح والفلتر، وجدولة Tube Conditioning.</p>
+          </div>
+
+          <div class="example">
+            <span class="badge">Random Forest</span>
+            <h3>مثال: Fluoroscopy – قرار متعدد العوامل</h3>
+            <p class="mini">أهم الميزات (Feature Importance):</p>
+            <ul class="mini">
+              <li>جهد الخط Line Voltage استقرارًا (CV) 0.06.</li>
+              <li>درجة حرارة Tube Peak آخر 72 ساعة.</li>
+              <li>عدد أخطاء System Warnings الأسبوع الحالي.</li>
+            </ul>
+            <p class="mini"><strong>قرار الغابة:</strong> خطر مرتفع (تصويت 73/100 شجرة).</p>
+            <p class="mini"><strong>التوصية:</strong> معايرة مزود الطاقة، وفحص توصيلات التأريض، ومراقبة التحذيرات لمدة 48 ساعة.</p>
+          </div>
+
+          <div class="example">
+            <span class="badge">LSTM</span>
+            <h3>مثال: MRI – سلسلة زمنية</h3>
+            <p class="mini">سلسلة 48 ساعة تُظهر:</p>
+            <ul class="mini">
+              <li>انخفاض Helium % من 92 → 88 مع ميل هابط.</li>
+              <li>ارتفاع تدريجي في Cold Head Temp.</li>
+              <li>دفعات أخطاء Gradient متقطعة قرب نهاية اليوم الثاني.</li>
+            </ul>
+            <p class="mini"><strong>توقع LSTM:</strong> مخاطرة عالية خلال <b>72 ساعة</b> (Score 0.82).</p>
+            <p class="mini"><strong>التوصية:</strong> فحص نظام التبريد، مراجعة تسريب الهيليوم، وجدولة زيارة فني إذا استمرت الزيادة.</p>
+          </div>
+        </div>
+        <p class="muted" style="text-align:center;margin-top:10px">أمثلة تمثيلية للتوضيح — تُضبط العتبات حسب سعة الفريق ومعدل الإنذار المقبول.</p>
+      </section>
+
+      <!-- S7: لوحة التحكم والتحليل -->
       <section class="slide">
         <h2>لوحة التحكم والتحليل (Dashboard)</h2>
         <div class="dash">
@@ -225,7 +278,7 @@
         </div>
       </section>
 
-      <!-- S7: الأثر المتوقع والخطوات القادمة -->
+      <!-- S8: الأثر المتوقع والخطوات القادمة -->
       <section class="slide">
         <h2>الأثر المتوقع والخطوات القادمة</h2>
         <div class="grid2" style="margin-top:10px">
